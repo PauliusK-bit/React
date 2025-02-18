@@ -1,0 +1,17 @@
+.title {
+  color: black;
+}
+
+.title-name {
+  color: teal;
+  font-weight: bold;
+}
+
+.body-name {
+  color: steelblue;
+}
+
+.body {
+  font-weight: bold;
+  font-size: 30px;
+}
