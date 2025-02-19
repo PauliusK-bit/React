@@ -6,6 +6,12 @@ import Posts from "./pages/PostsPage/Posts";
 import SinglePost from "./pages/PostsPage/SinglePost";
 import Comments from "./pages/CommentsPage/Comments";
 import SingleComment from "./pages/CommentsPage/SingleComment";
+import Users from "./pages/UsersPage/Users";
+import SingleUser from "./pages/UsersPage/SingleUser";
+import Albums from "./pages/AlbumsPage/Albums";
+import SingleAlbum from "./pages/AlbumsPage/SingleAlbum";
+import CreatePostPage from "./pages/PostsPage/CreatePostPage";
+import CreateUserPage from "./pages/UsersPage/CreateUserPage";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
@@ -17,12 +23,14 @@ createRoot(document.getElementById("root")).render(
 
             <Route path="posts" element={<Posts />} />
             <Route path="posts/:id" element={<SinglePost />} />
+            <Route path="createpost" element={<CreatePostPage />} />
 
-            <Route path="users" element={<h1>Users Page</h1>} />
-            <Route path="users/:id" element={<h1>Single Users Page</h1>} />
+            <Route path="users" element={<Users />} />
+            <Route path="users/:id" element={<SingleUser />} />
+            <Route path="createuser" element={<CreateUserPage />} />
 
-            <Route path="albums" element={<h1>Album Page</h1>} />
-            <Route path="albums/:id" element={<h1>Single Album Page</h1>} />
+            <Route path="albums" element={<Albums />} />
+            <Route path="albums/:id" element={<SingleAlbum />} />
 
             <Route path="comments" element={<Comments />} />
             <Route path="comments/:id" element={<SingleComment />} />

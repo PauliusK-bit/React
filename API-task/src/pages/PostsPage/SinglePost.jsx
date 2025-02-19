@@ -1,16 +1,18 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import "./SinglePost.css";
+import { API_URL } from "../../../config";
+import axios from "axios";
 
 function SinglePost() {
   const { id } = useParams();
   const [post, setPost] = useState(null);
 
+  let navigate = useNavigate();
+
   useEffect(() => {
     const fetchPost = async () => {
-      const res = await fetch(
-        `https://jsonplaceholder.typicode.com/posts/${id}?_embed=comments`
-      );
+      const res = await fetch(`${API_URL}/posts/${id}?_embed=comments`);
       const postData = await res.json();
       setPost(postData);
     };
@@ -23,9 +25,16 @@ function SinglePost() {
   }
 
   const { title, body, comments } = post;
+
+  const deleteHandler = async () => {
+    await axios.delete(`${API_URL}/posts/${id}`);
+    navigate("/api/project/posts");
+  };
+
   return (
     <>
       <h1 className="title">
+        <button onClick={deleteHandler}>Delete Post</button>
         Posto pavadinimas: <span className="title-name">{title}</span>
       </h1>
       <p className="body">

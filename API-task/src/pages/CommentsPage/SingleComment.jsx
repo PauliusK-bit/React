@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useState } from "react";
 import { useParams } from "react-router";
+import { API_URL } from "../../../config";
 
 function SingleComment() {
   const { id } = useParams();
@@ -9,13 +10,11 @@ function SingleComment() {
 
   useEffect(() => {
     const fetchComment = async () => {
-      const res = await fetch(
-        `https://jsonplaceholder.typicode.com/comments/${id}`
-      );
+      const res = await fetch(`${API_URL}/comments/${id}`);
       const commentData = await res.json();
 
       const postRes = await fetch(
-        `https://jsonplaceholder.typicode.com/posts/${commentData.postId}?_expand=user`
+        `${API_URL}/posts/${commentData.postId}?_expand=user`
       );
 
       const postData = await postRes.json();
@@ -32,7 +31,7 @@ function SingleComment() {
     return <p>Loading comment....</p>;
   }
 
-  const { name, body, email } = comment;
+  const { name, body } = comment;
 
   return (
     <>

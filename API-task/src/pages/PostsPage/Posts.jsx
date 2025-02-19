@@ -1,14 +1,13 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router";
+import { API_URL } from "../../../config";
 
 function Posts() {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
     const fetchPosts = async () => {
-      const res = await fetch(
-        "https://jsonplaceholder.typicode.com/posts?_embed=comments&_expand=user&_limit=30"
-      );
+      const res = await fetch(`${API_URL}/posts?_embed=comments&_expand=user`);
       const postsData = await res.json();
       setPosts(postsData);
     };
