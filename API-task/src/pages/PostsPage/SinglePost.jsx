@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router";
+import { Link, useNavigate, useParams } from "react-router";
 import "./SinglePost.css";
 import { API_URL } from "../../../config";
 import axios from "axios";
@@ -33,6 +33,7 @@ function SinglePost() {
 
   return (
     <>
+      <Link to={`/api/project/posts/edit/${id}`}>Edit</Link>
       <h1 className="title">
         <button onClick={deleteHandler}>Delete Post</button>
         Posto pavadinimas: <span className="title-name">{title}</span>

@@ -40,14 +40,30 @@ function SingleUser() {
     <>
       <button onClick={deleteHandler}>Delete A User</button>
       <h1>User</h1>
-      <p>{name}</p>
-      <p>{email}</p>
-      <p>{phone}</p>
-      <p>{website}</p>
-      <p>{company.name}</p>
-      <p>{street}</p>
-      <p>{suite}</p>
-      <p>{city}</p>
+      <p>
+        Name: <strong>{name}</strong>
+      </p>
+      <p>
+        Email: <strong>{email}</strong>
+      </p>
+      <p>
+        Phone number: <strong>{phone}</strong>
+      </p>
+      <p>
+        Website: <strong>{website}</strong>
+      </p>
+      <p>
+        Company name: <strong>{company.name}</strong>
+      </p>
+      <p>
+        Street: <strong>{street}</strong>
+      </p>
+      <p>
+        Suite: <strong>{suite}</strong>
+      </p>
+      <p>
+        City: <strong>{city}</strong>
+      </p>
     </>
   );
 }

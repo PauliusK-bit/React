@@ -10,7 +10,7 @@ function Users() {
       const res = await fetch(`${API_URL}/users`);
 
       const usersData = await res.json();
-      console.log(usersData);
+
       setUsers(usersData);
     };
 

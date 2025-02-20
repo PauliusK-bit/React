@@ -1,13 +1,16 @@
+/* eslint-disable react/prop-types */
 import { useEffect, useState } from "react";
-
 import { useNavigate } from "react-router";
 import axios from "axios";
 import { API_URL } from "../../config";
 
-function PostForm() {
+function PostForm(props) {
+  const { editPostData } = props;
+
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
   const [selectedUser, setSelectedUser] = useState("");
+  const [postId, setPostId] = useState(null);
   const [users, setUsers] = useState(null);
   const [error, setError] = useState("");
 
@@ -19,11 +22,19 @@ function PostForm() {
       const usersData = await res.json();
 
       setUsers(usersData);
-      setSelectedUser(usersData[0].id);
+
+      if (editPostData) {
+        setPostId(editPostData.id);
+        setTitle(editPostData.title);
+        setBody(editPostData.body);
+        setSelectedUser(editPostData.userId);
+      } else {
+        setSelectedUser(usersData[0].id);
+      }
     };
 
     fetchUsers();
-  }, []);
+  }, [editPostData]);
 
   const titleHandler = (event) => setTitle(event.target.value);
   const bodyHandler = (event) => setBody(event.target.value);
@@ -43,12 +54,17 @@ function PostForm() {
       userId: selectedUser,
     };
 
-    const { data } = await axios.post(`${API_URL}/posts`, newPost);
-    navigate("/api/project/posts/" + data.id);
+    if (editPostData) {
+      const { data } = await axios.put(`${API_URL}/posts/${postId}`, newPost);
+      navigate("/api/project/posts/" + data.id);
+    } else {
+      const { data } = await axios.post(`${API_URL}/posts`, newPost);
+      navigate("/api/project/posts/" + data.id);
+    }
   };
 
   if (!users) {
-    return <p>Loading.....</p>;
+    return <p>Loading....</p>;
   }
 
   return (
@@ -84,7 +100,9 @@ function PostForm() {
         </select>
       </div>
 
-      <button type="submit">Create New Post</button>
+      <button type="submit">
+        {editPostData ? "Edit Post" : "Create New Post"}
+      </button>
 
       {error && <p>{error}</p>}
     </form>

@@ -12,6 +12,10 @@ import Albums from "./pages/AlbumsPage/Albums";
 import SingleAlbum from "./pages/AlbumsPage/SingleAlbum";
 import CreatePostPage from "./pages/PostsPage/CreatePostPage";
 import CreateUserPage from "./pages/UsersPage/CreateUserPage";
+import CreateAlbumPage from "./pages/AlbumsPage/CreateAlbumPage";
+import Todos from "./pages/TodosPage/Todos";
+import SingleTodo from "./pages/TodosPage/SingleTodo";
+import EditPost from "./pages/PostsPage/EditPost";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
@@ -24,6 +28,7 @@ createRoot(document.getElementById("root")).render(
             <Route path="posts" element={<Posts />} />
             <Route path="posts/:id" element={<SinglePost />} />
             <Route path="createpost" element={<CreatePostPage />} />
+            <Route path="posts/edit/:id" element={<EditPost />} />
 
             <Route path="users" element={<Users />} />
             <Route path="users/:id" element={<SingleUser />} />
@@ -31,12 +36,13 @@ createRoot(document.getElementById("root")).render(
 
             <Route path="albums" element={<Albums />} />
             <Route path="albums/:id" element={<SingleAlbum />} />
+            <Route path="createalbum" element={<CreateAlbumPage />} />
 
             <Route path="comments" element={<Comments />} />
             <Route path="comments/:id" element={<SingleComment />} />
 
-            <Route path="todos" element={<h1>Todos Page</h1>} />
-            <Route path="todos/:id" element={<h1>Single Todo Page</h1>} />
+            <Route path="todos" element={<Todos />} />
+            <Route path="todos/:id" element={<SingleTodo />} />
           </Route>
         </Route>
       </Routes>

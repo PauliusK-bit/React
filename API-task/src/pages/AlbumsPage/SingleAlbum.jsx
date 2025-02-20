@@ -14,7 +14,6 @@ function SingleAlbum() {
 
       const userRes = await axios(`${API_URL}/users/${data.userId}`);
       setAuthor(userRes.data);
-      console.log(userRes.data);
 
       setAlbum(data);
     };
