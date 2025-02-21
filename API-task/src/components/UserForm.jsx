@@ -1,9 +1,11 @@
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { API_URL } from "../../config";
 
-function UserForm() {
+function UserForm(props) {
+  const { editUserData } = props;
+
   const [name, setName] = useState("");
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -20,6 +22,26 @@ function UserForm() {
   const [error, setError] = useState("");
 
   let navigate = useNavigate();
+
+  useEffect(() => {
+    console.log("Edit user data", editUserData);
+
+    if (editUserData) {
+      setName(editUserData.name);
+      setUsername(editUserData.username);
+      setEmail(editUserData.email);
+      setStreet(editUserData.address.street);
+      setSuite(editUserData.address.suite);
+      setCity(editUserData.address.city);
+      setZipcode(editUserData.address.zipcode);
+      setLat(editUserData.address.geo.lat);
+      setLng(editUserData.address.geo.lng);
+      setPhone(editUserData.phone);
+      setWebsite(editUserData.website);
+      setCompanyName(editUserData.company.name);
+      setCatchphrase(editUserData.company.catchPhrase);
+    }
+  }, [editUserData]);
 
   const nameHandler = (event) => setName(event.target.value);
   const usernameHandler = (event) => setUsername(event.target.value);
@@ -65,8 +87,19 @@ function UserForm() {
       },
     };
 
-    const { data } = await axios.post(`${API_URL}/users`, newUser);
-    navigate(`/api/project/users/${data.id}`);
+    try {
+      if (editUserData) {
+        const { data } = await axios.put(
+          `${API_URL}/users/${editUserData.id}`,
+          newUser
+        );
+      } else {
+        const { data } = await axios.post(`${API_URL}/users`, newUser);
+        navigate(`/api/project/users/${data.id}`);
+      }
+    } catch (error) {
+      setError("Something went wrong..");
+    }
   };
 
   return (
@@ -75,7 +108,13 @@ function UserForm() {
       <form onSubmit={submitHandler}>
         <div className="form-control">
           <label htmlFor="name">Name:</label>
-          <input type="text" name="name" id="name" onChange={nameHandler} />
+          <input
+            type="text"
+            name="name"
+            id="name"
+            onChange={nameHandler}
+            value={name}
+          />
         </div>
         <div className="form-control">
           <label htmlFor="username">Username:</label>
@@ -84,11 +123,18 @@ function UserForm() {
             name="username"
             id="username"
             onChange={usernameHandler}
+            value={username}
           />
         </div>
         <div className="form-control">
           <label htmlFor="email">Email:</label>
-          <input type="email" name="email" id="email" onChange={emailHandler} />
+          <input
+            type="email"
+            name="email"
+            id="email"
+            onChange={emailHandler}
+            value={email}
+          />
         </div>
         <div className="form-control">
           <label htmlFor="street">Street:</label>
@@ -97,40 +143,67 @@ function UserForm() {
             name="street"
             id="street"
             onChange={streetHandler}
+            value={street}
           />
         </div>
         <div className="form-control">
           <label htmlFor="suite">Suite:</label>
-          <input type="text" name="suite" id="suite" onChange={suiteHandler} />
+          <input
+            type="text"
+            name="suite"
+            id="suite"
+            onChange={suiteHandler}
+            value={suite}
+          />
         </div>
         <div className="form-control">
           <label htmlFor="city">City</label>
-          <input type="text" name="city" id="city" onChange={cityHandler} />
+          <input
+            type="text"
+            name="city"
+            id="city"
+            onChange={cityHandler}
+            value={city}
+          />
         </div>
         <div className="form-control">
           <label htmlFor="zipcode">Zipcode:</label>
           <input
-            type="number"
+            type="text"
             name="zipcode"
             id="zipcode"
             onChange={zipcodeHandler}
+            value={zipcode}
           />
         </div>
         <div className="form-control">
           <label htmlFor="lat">Lat:</label>
-          <input type="number" name="lat" id="zipcode" onChange={latHandler} />
+          <input
+            type="number"
+            name="lat"
+            id="lat"
+            onChange={latHandler}
+            value={lat}
+          />
         </div>
         <div className="form-control">
           <label htmlFor="lng">Lng:</label>
-          <input type="number" name="lng" id="lng" onChange={lngHandler} />
+          <input
+            type="number"
+            name="lng"
+            id="lng"
+            onChange={lngHandler}
+            value={lng}
+          />
         </div>
         <div className="form-control">
           <label htmlFor="phone">Phone number:</label>
           <input
-            type="number"
+            type="text"
             id="phone"
             name="phone"
             onChange={phoneHandler}
+            value={phone}
           />
         </div>
         <div className="form-control">
@@ -140,6 +213,7 @@ function UserForm() {
             name="website"
             id="website"
             onChange={websiteHandler}
+            value={website}
           />
         </div>
         <div className="form-control">
@@ -149,6 +223,7 @@ function UserForm() {
             name="company-name"
             id="company-name"
             onChange={companyNameHandler}
+            value={companyName}
           />
         </div>
         <div className="form-control">
@@ -158,6 +233,7 @@ function UserForm() {
             name="catchphrase"
             id="catchphrase"
             onChange={catchphraseHandler}
+            value={catchPhrase}
           />
         </div>
         <button type="submit">Create a New User</button>

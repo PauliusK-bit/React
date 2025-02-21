@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router";
+import { Link, useNavigate, useParams } from "react-router";
 import { API_URL } from "../../../config";
 import axios from "axios";
 
@@ -39,6 +39,7 @@ function SingleUser() {
   return (
     <>
       <button onClick={deleteHandler}>Delete A User</button>
+      <Link to={`/api/project/users/edit/${id}`}>Edit</Link>
       <h1>User</h1>
       <p>
         Name: <strong>{name}</strong>

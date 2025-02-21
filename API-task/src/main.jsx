@@ -16,6 +16,7 @@ import CreateAlbumPage from "./pages/AlbumsPage/CreateAlbumPage";
 import Todos from "./pages/TodosPage/Todos";
 import SingleTodo from "./pages/TodosPage/SingleTodo";
 import EditPost from "./pages/PostsPage/EditPost";
+import EditUser from "./pages/UsersPage/EditUser";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
@@ -33,6 +34,7 @@ createRoot(document.getElementById("root")).render(
             <Route path="users" element={<Users />} />
             <Route path="users/:id" element={<SingleUser />} />
             <Route path="createuser" element={<CreateUserPage />} />
+            <Route path="users/edit/:id" element={<EditUser />} />
 
             <Route path="albums" element={<Albums />} />
             <Route path="albums/:id" element={<SingleAlbum />} />
