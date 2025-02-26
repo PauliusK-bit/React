@@ -3,8 +3,13 @@ import { useEffect, useState } from "react";
 import { API_URL } from "../../../config";
 import { Link } from "react-router";
 
-function Albums() {
-  const [albums, setAlbums] = useState([]);
+type Album = {
+  id: number;
+  title: string;
+};
+
+const Albums: React.FC = () => {
+  const [albums, setAlbums] = useState<Album[]>([]);
 
   useEffect(() => {
     const fetchAlbums = async () => {
@@ -30,6 +35,6 @@ function Albums() {
       </ul>
     </>
   );
-}
+};
 
 export default Albums;

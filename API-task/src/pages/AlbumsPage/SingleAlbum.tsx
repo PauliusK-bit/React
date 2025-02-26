@@ -3,14 +3,27 @@ import { useParams } from "react-router";
 import { API_URL } from "../../../config";
 import axios from "axios";
 
-function SingleAlbum() {
-  const { id } = useParams();
-  const [album, setAlbum] = useState(null);
-  const [author, setAuthor] = useState(null);
+type Album = {
+  id: number;
+  title: string;
+  userId: number;
+};
+
+type Author = {
+  id: number;
+  name: string;
+};
+
+const SingleAlbum: React.FC = () => {
+  const { id } = useParams<{ id: string }>();
+  const [album, setAlbum] = useState<Album | null>(null);
+  const [author, setAuthor] = useState<Author | null>(null);
 
   useEffect(() => {
     const fetchAlbum = async () => {
-      const { data } = await axios(`${API_URL}/albums/${id}?_expand=user`);
+      const { data } = await axios<Album>(
+        `${API_URL}/albums/${id}?_expand=user`
+      );
 
       const userRes = await axios(`${API_URL}/users/${data.userId}`);
       setAuthor(userRes.data);
@@ -38,6 +51,6 @@ function SingleAlbum() {
       )}
     </>
   );
-}
+};
 
 export default SingleAlbum;
